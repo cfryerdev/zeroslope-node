@@ -1,0 +1,43 @@
+# ------------------- Deployment ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+    labels:
+        io.kompose.service: zeroslope-database
+    name: zeroslope-database
+spec:
+    replicas: 1
+    strategy: {}
+    template:
+        metadata:
+            labels:
+                io.kompose.service: zeroslope-database
+        spec:
+            containers:
+                - image: mongo
+                  name: zeroslope-database
+                  ports:
+                      - containerPort: 27017
+                        protocol: TCP
+                  resources: {}
+            restartPolicy: Always
+status: {}
+
+---
+# ------------------- Service ------------------- #
+
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        io.kompose.service: zeroslope-database
+    name: zeroslope-database
+spec:
+    ports:
+        - port: 27017
+          targetPort: 27017
+    selector:
+        io.kompose.service: zeroslope-database
+status:
+    loadBalancer: {}

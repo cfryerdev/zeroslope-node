@@ -1,0 +1,14 @@
+{
+    "presets": ["@babel/preset-env"],
+    "sourceMaps": true,
+    "ignore": [
+        "node_modules",
+        ".git",
+        ".vscode",
+        ".idea",
+        ".env",
+        "test",
+        "*/swagger-ui.js",
+        "*/swagger-ui-bundle.js"
+    ]
+}

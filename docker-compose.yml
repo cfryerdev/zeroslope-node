@@ -1,0 +1,20 @@
+version: '2'
+services:
+    zeroslope-api:
+        build: .
+        ports:
+            - '3001:3001'
+        depends_on:
+            - zeroslope-database
+        environment:
+            - NODE_ENV=production
+            - PORT=3001
+            - JWT_SECRET=EAAF531A-AD62-411B-8386-C3B876EC9479
+            - JWT_CLIENT_ID=D79D2AD6-9560-4B72-8EF9-4B8095AB5C9B
+            - JWT_ISSUER=zeroslope-svc
+            - MONGODB_HOST=database
+            - MONGODB_DATABASE=zeroslope
+    zeroslope-database:
+        image: mongo
+        ports:
+            - '27017:27017'

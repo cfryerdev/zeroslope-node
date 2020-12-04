@@ -1,0 +1,58 @@
+# ------------------- Deployment ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+    labels:
+        io.kompose.service: zeroslope-api
+    name: zeroslope-api
+spec:
+    replicas: 1
+    strategy: {}
+    template:
+        metadata:
+            labels:
+                io.kompose.service: zeroslope-api
+        spec:
+            containers:
+                - env:
+                      - name: JWT_CLIENT_ID
+                        value: D79D2AD6-9560-4B72-8EF9-4B8095AB5C9B
+                      - name: JWT_ISSUER
+                        value: zeroslope-svc
+                      - name: JWT_SECRET
+                        value: EAAF531A-AD62-411B-8386-C3B876EC9479
+                      - name: MONGODB_DATABASE
+                        value: zeroslope
+                      - name: MONGODB_HOST
+                        value: database
+                      - name: NODE_ENV
+                        value: production
+                      - name: PORT
+                        value: '3001'
+                  image: zeroslope-api
+                  name: zeroslope-api
+                  ports:
+                      - containerPort: 3001
+                        protocol: TCP
+                  resources: {}
+            restartPolicy: Always
+status: {}
+
+---
+# ------------------- Service ------------------- #
+
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        io.kompose.service: zeroslope-api
+    name: zeroslope-api
+spec:
+    ports:
+        - port: 3001
+          targetPort: 3001
+    selector:
+        io.kompose.service: zeroslope-api
+status:
+    loadBalancer: {}

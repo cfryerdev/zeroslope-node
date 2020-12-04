@@ -1,0 +1,5 @@
+.vscode
+.gitignore
+swagger/
+node_modules/
+dist/
